@@ -16,7 +16,18 @@
     },
     "storybook-e2e": {
       "tags": [],
-      "implicitDependencies": ["storybook"]
+      "implicitDependencies": [
+        "storybook"
+      ]
+    },
+    "mynamespace-mylib": {
+      "tags": []
+    },
+    "mynamespace-mylib-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "mynamespace-mylib"
+      ]
     }
   }
 }

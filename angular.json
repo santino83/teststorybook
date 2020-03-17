@@ -25,7 +25,9 @@
               "apps/storybook/src/favicon.ico",
               "apps/storybook/src/assets"
             ],
-            "styles": ["apps/storybook/src/styles.scss"],
+            "styles": [
+              "apps/storybook/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -83,7 +85,10 @@
               "apps/storybook/tsconfig.app.json",
               "apps/storybook/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/storybook/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/storybook/**"
+            ]
           }
         },
         "test": {
@@ -118,8 +123,110 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/storybook-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/storybook-e2e/**"]
+            "tsConfig": [
+              "apps/storybook-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/storybook-e2e/**"
+            ]
+          }
+        }
+      }
+    },
+    "mynamespace-mylib": {
+      "projectType": "library",
+      "root": "libs/mynamespace/mylib",
+      "sourceRoot": "libs/mynamespace/mylib/src",
+      "prefix": "voiptech",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/mynamespace/mylib/tsconfig.lib.json",
+              "libs/mynamespace/mylib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/mynamespace/mylib/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/mynamespace/mylib/jest.config.js",
+            "tsConfig": "libs/mynamespace/mylib/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/mynamespace/mylib/src/test-setup.ts"
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/mynamespace/mylib/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/mynamespace-mylib",
+            "config": {
+              "configFolder": "libs/mynamespace/mylib/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "mynamespace-mylib-e2e": {
+      "root": "apps/mynamespace-mylib-e2e",
+      "sourceRoot": "apps/mynamespace-mylib-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mynamespace-mylib-e2e/cypress.json",
+            "tsConfig": "apps/mynamespace-mylib-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mynamespace-mylib:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "mynamespace-mylib:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/mynamespace-mylib-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/mynamespace-mylib-e2e/**"
+            ]
           }
         }
       }
