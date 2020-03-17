@@ -1,84 +1,53 @@
-# Voiptech
 
-This project was generated using [Nx](https://nx.dev).
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="450"></p>
+# Inizializzo il progetto con nx e creo un'app di default di nome storybook 
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+npm init nx-workspace
 
-## Quick Start & Documentation
+# Aggiungo storybook
 
-[Nx Documentation](https://nx.dev/angular)
+npm install @storybook/angular --save-dev
+npm install @storybook/addon-knobs --save-dev
+npm install babel-loader @babel/core@latest --save-dev
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+# Aggiungo il supporto a storybook in nrwl
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+npm install @nrwl/storybook --save-dev
 
-## Adding capabilities to your workspace
+# Creo una libreria di demo con un componente di esempio
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+ng g lib mylib --directory=mynamespace
+ng g component firstcomponent --project mynamespace-mylib
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+# Configuro storybook per la libreria appena creata e gli faccio generare la storia di default per il componente "firstcomponent"
 
-Below are some plugins which you can add to your workspace:
+nx g @nrwl/angular:storybook-configuration mynamespace-mylib
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+# Testo il tutto: tutto ok
 
-## Generate an application
+nx run mynamespace-mylib:storybook
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+# Aggiungo Docs a storybook
 
-> You can use any of the plugins above to generate applications as well.
+npm install @storybook/addon-docs --save-dev
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+# Lo faccio caricare globalmente andando a modificare .storybook/addons.js
 
-## Generate a library
+import '@storybook/addon-docs/register';
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+# Installo compodoc
 
-> You can also use any of the plugins above to generate libraries as well.
+npm install --save-dev @compodoc/compodoc
 
-Libraries are sharable across libraries and applications. They can be imported from `@voiptech/mylib`.
+# Aggiungo uno script in package.json
 
-## Development server
+"docs:json": "compodoc -p ./tsconfig.json -e json -d .",
 
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+# Creo il documentation.json di default:
 
-## Code scaffolding
+npm run docs:json
 
-Run `ng g component my-component --project=my-app` to generate a new component.
+# Tutto ok
 
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
+A questo punto, la guida ufficiale di storybook dice di seguire questa procedura: https://github.com/storybookjs/storybook/tree/next/addons/docs/angular ma se inserisco preview.ts non mi compila piu
+storybook, e quindi non so come configurare Docs per leggere documentation.json e funzionare
