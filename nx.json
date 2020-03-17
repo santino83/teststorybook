@@ -1,0 +1,22 @@
+{
+  "npmScope": "voiptech",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "storybook": {
+      "tags": []
+    },
+    "storybook-e2e": {
+      "tags": [],
+      "implicitDependencies": ["storybook"]
+    }
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "projects": {
+    "storybook": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/storybook",
+      "sourceRoot": "apps/storybook/src",
+      "prefix": "voiptech",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/storybook",
+            "index": "apps/storybook/src/index.html",
+            "main": "apps/storybook/src/main.ts",
+            "polyfills": "apps/storybook/src/polyfills.ts",
+            "tsConfig": "apps/storybook/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/storybook/src/favicon.ico",
+              "apps/storybook/src/assets"
+            ],
+            "styles": ["apps/storybook/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/storybook/src/environments/environment.ts",
+                  "with": "apps/storybook/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "storybook:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "storybook:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "storybook:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/storybook/tsconfig.app.json",
+              "apps/storybook/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/storybook/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/storybook/jest.config.js",
+            "tsConfig": "apps/storybook/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/storybook/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "storybook-e2e": {
+      "root": "apps/storybook-e2e",
+      "sourceRoot": "apps/storybook-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/storybook-e2e/cypress.json",
+            "tsConfig": "apps/storybook-e2e/tsconfig.e2e.json",
+            "devServerTarget": "storybook:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "storybook:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/storybook-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/storybook-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "storybook"
+}
