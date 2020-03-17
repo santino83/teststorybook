@@ -7,7 +7,9 @@ npm init nx-workspace
 # Aggiungo storybook
 
 npm install @storybook/angular --save-dev
+
 npm install @storybook/addon-knobs --save-dev
+
 npm install babel-loader @babel/core@latest --save-dev
 
 # Aggiungo il supporto a storybook in nrwl
@@ -17,6 +19,7 @@ npm install @nrwl/storybook --save-dev
 # Creo una libreria di demo con un componente di esempio
 
 ng g lib mylib --directory=mynamespace
+
 ng g component firstcomponent --project mynamespace-mylib
 
 # Configuro storybook per la libreria appena creata e gli faccio generare la storia di default per il componente "firstcomponent"
